@@ -54,7 +54,6 @@ class PostsController extends Controller
             'image' => $imagePath
         ]);
 
-        // \App\Post::create($data);
         return redirect('/profile/' . auth()->user()->id);
     }
 
@@ -62,5 +61,14 @@ class PostsController extends Controller
     public function show(\App\Post $post)
     {
         return view('posts.show', compact('post'));
+    }
+
+
+    # add delete post function
+    public function delete(\App\Post $post)
+    {
+        $post = Post::find($post->id);
+        $post->delete();
+        return redirect('/profile/' . auth()->user()->id);
     }
 }

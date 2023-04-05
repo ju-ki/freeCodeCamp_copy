@@ -19,7 +19,12 @@
                                     <span class="text-dark">{{ $post->user->username }}
                                     </span>
                                 </a>
-                                <a href="#" class="pl-3">Follow</a>
+                                <a href="#" class="pl-3 pr-3">Follow</a>
+                                <form id="delete-form" action="{{ route('post.destroy',  ['post'=>$post->id]) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <delete-button>Delete</delete-button>
+                                </form>
                             </div>
                         </div>
                     </div>

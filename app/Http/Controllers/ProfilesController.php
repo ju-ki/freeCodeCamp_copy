@@ -18,15 +18,25 @@ class ProfilesController extends Controller
             return $user->posts->count();
         });
 
-        $followers = Cache::remember('count.followers.'. $user->id, now()->addSeconds(30) ,function () use ($user) {
+        $followersCount = Cache::remember('count.followersCount.'. $user->id, now()->addSeconds(30) ,function () use ($user) {
             return $user->profile->followers->count();
         });
 
-        $following = Cache::remember('count.following.'. $user->id, now()->addSeconds(30) ,function () use ($user) {
+        $followers = Cache::remember('count.followers.'. $user->id, now()->addSeconds(30) ,function () use ($user) {
+            return $user->profile->followers;
+        });
+
+        $followingCount = Cache::remember('count.followingCount.'. $user->id, now()->addSeconds(30) ,function () use ($user) {
             return $user->following->count();
         });
 
-        return view('profiles.index', compact('user', 'follows', 'postCount', 'followers', 'following'));
+        $followings = Cache::remember('count.following.'. $user->id, now()->addSeconds(30) ,function () use ($user) {
+            return $user->following;
+        });
+
+
+
+        return view('profiles.index', compact('user', 'follows', 'postCount', 'followersCount', 'followingCount', 'followers', 'followings'));
     }
 
 
